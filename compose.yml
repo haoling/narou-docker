@@ -1,9 +1,19 @@
 services:
   narou:
-    image: haoling/narou:3.9.0
+    build:
+      context: .
+      dockerfile: dockerfile
+      args:
+        NAROU_VERSION: 3.9.1
+        AOZORAEPUB3_VERSION: 1.1.1b30Q
+        UID: 1000
+        GID: 1000
+    image: haoling/narou:3.9.1
     command: ["narou", "web", "-np", "33000"]
     volumes:
-      - .:/home/narou/novel:cached
+      - type: bind
+        source: .
+        target: /home/narou/novel
     tty: true
     stdin_open: true
     ports:
